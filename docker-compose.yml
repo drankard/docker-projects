@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  base_image:
+    build: base_image
+    image: base_image
+  
+  mesos_master:
+    image: base_image
+    ports:
+    - "22"
+
+
+  ansible_host:
+    image: base_image
+    hostname: ansible_host
+    container_name: ansible_host
+    depends_on:
+    - mesos_master
+    links:
+    - mesos_master
+    ports:
+    - "22"
+    volumes:
+    - ./configuration:/configuration
+    - ./ssh_keys:/home/ansible_user/.ssh
