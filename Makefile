@@ -1,3 +1,5 @@
+env: 
+	eval $(docker-machine env)
 init:
 	ln -s ~/.ssh ssh_keys
 	git clone git@github.com:skm-ice/configuration.git

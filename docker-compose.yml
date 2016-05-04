@@ -4,7 +4,17 @@ services:
   base_image:
     build: base_image
     image: base_image
+    volumes:
+    - ./ssh_keys:/home/ansible_user/.ssh
   
+  test_node:
+    image: base_image
+    hostname: test_node
+    volumes_from:
+    - base_image
+    ports:
+    - 22
+
   mesos_master:
     image: base_image
     ports:
@@ -21,6 +31,7 @@ services:
     - mesos_master
     ports:
     - "22"
+    volumes_from:
+    - base_image
     volumes:
     - ./configuration:/configuration
-    - ./ssh_keys:/home/ansible_user/.ssh

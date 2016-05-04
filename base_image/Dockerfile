@@ -9,9 +9,9 @@ RUN apt-get clean
 RUN apt-get update -qq
 RUN apt-get install -y git openssh-server python-apt python-software-properties software-properties-common
 RUN apt-get install -y --reinstall ca-certificates
-# RUN apt-add-repository ppa:ansible/ansible
-RUN apt-get install -y ansible
+RUN apt-add-repository ppa:ansible/ansible
 RUN apt-get update -qq
+RUN apt-get install -y ansible
 
 RUN mkdir /var/run/sshd
 RUN chmod 0755 /var/run/sshd
@@ -28,6 +28,9 @@ RUN chown -R ansible_user:ansible_user /home/ansible_user
 # RUN chmod 600 /home/ansible_user/.ssh/authorized_keys /home/ansible_user/.ssh/id_rsa
 # RUN chmod 0644 /home/ansible_user/.ssh/id_rsa.pub
 # RUN echo "Host *\n\tStrictHostKeyChecking no\n" >> /home/ansible_user/.ssh/config
+
+RUN cp /usr/share/vim/vimrc /home/ansible_user/.vimrc
+RUN echo "TERM=xterm" >> /home/ansible_user/bashrc
 
 EXPOSE 22
 ENTRYPOINT ["/usr/sbin/sshd", "-D"]
